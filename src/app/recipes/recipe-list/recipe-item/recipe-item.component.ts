@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Recipe} from "../../../models/recipe.model";
-import XSuite = jasmine.XSuite;
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+
+import { Recipe } from '../../../models/recipe.model';
 
 @Component({
   selector: 'app-recipe-item',
@@ -10,6 +10,7 @@ import XSuite = jasmine.XSuite;
 export class RecipeItemComponent implements OnInit {
   @Input() recipe: Recipe;
   @Output() recipeSelected = new EventEmitter<void>();
+
   constructor() { }
 
   ngOnInit() {
