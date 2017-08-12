@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Recipe} from "../../models/recipe.model";
 import {RecipeService} from "../../services/recipe.service";
+import {RouteProtectionService} from "../../shared/route-protection.service";
 
 @Component({
   selector: 'app-recipe-edit',
@@ -11,9 +12,9 @@ import {RecipeService} from "../../services/recipe.service";
 export class RecipeEditComponent implements OnInit {
   recipe: Recipe;
   id: number;
-  editMode = false;
 
   constructor(private route: ActivatedRoute,
+              private routeGuard: RouteProtectionService,
               private recipeService: RecipeService) {
   }
 
@@ -23,8 +24,7 @@ export class RecipeEditComponent implements OnInit {
         (recipes: Recipe) => {
           this.id = recipes.id;
           this.recipe = this.recipeService.getRecipe(this.id);
-          this.editMode = this.recipe !== null ? true : false;
-          console.log(this.editMode);
+          this.routeGuard.onRootProtectionRecipe(this.recipe);
         }
       );
   }

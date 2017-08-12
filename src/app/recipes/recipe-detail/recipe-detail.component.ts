@@ -3,6 +3,7 @@ import {Component, OnInit} from '@angular/core';
 import {Recipe} from '../../models/recipe.model';
 import {RecipeService} from "../../services/recipe.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {RouteProtectionService} from "../../shared/route-protection.service";
 
 @Component({
   selector: 'app-recipe-detail',
@@ -14,6 +15,7 @@ export class RecipeDetailComponent implements OnInit {
   id: number;
 
   constructor(private recipeService: RecipeService,
+              private routeGuard: RouteProtectionService,
               private route: ActivatedRoute,
               private router: Router) {
   }
@@ -24,6 +26,7 @@ export class RecipeDetailComponent implements OnInit {
         (recipes: Recipe) => {
           this.id = recipes.id;
           this.recipe = this.recipeService.getRecipe(this.id);
+          this.routeGuard.onRootProtectionRecipe(this.recipe);
         }
       );
   }
