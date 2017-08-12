@@ -1,6 +1,5 @@
 import {Ingredient} from "../models/ingredient.model";
 import {EventEmitter} from "@angular/core";
-import {forEach} from "@angular/router/src/utils/collection";
 
 export class ShoppingListService {
   ingredientsChange = new EventEmitter<Ingredient[]>();
@@ -14,9 +13,13 @@ export class ShoppingListService {
     return this.ingredients.slice();
   }
 
-  appIngredient(newIngredient: Ingredient) {
+  addIngredient(newIngredient: Ingredient) {
     this.ingredients.push(newIngredient);
     this.ingredientsChange.emit(this.ingredients.slice());
+  }
 
+  addIngredients(newIngredients: Ingredient[]) {
+    this.ingredients.push(...newIngredients);
+    this.ingredientsChange.emit(this.ingredients.slice());
   }
 }
