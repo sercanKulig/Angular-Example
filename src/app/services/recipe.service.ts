@@ -41,4 +41,9 @@ export class RecipeService {
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
     this.sls.addIngredients(ingredients);
   }
+
+  getRecipeLastId() {
+    const recipeList = this.recipes.slice();
+    return recipeList.length > 0 ? recipeList[recipeList.length - 1].id : false;
+  }
 }
