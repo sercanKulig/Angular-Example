@@ -27,6 +27,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
           this.editMode = true;
           this.editedItem = this.sls.getIngredient(id - 1);
           this.slForm.setValue({
+            id: this.editedItem.id,
             name: this.editedItem.name,
             amount: this.editedItem.amount
           })
@@ -37,8 +38,13 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   onAddItem(form: NgForm) {
     const value = form.value;
     const id = this.sls.getIngredients()[this.sls.getIngredients().length - 1].id + 1;
-    const newIngredient = new Ingredient(id, value.name, value.amount);
-    this.sls.addIngredient(newIngredient);
+    if (this.editMode) {
+      const newIngredient = new Ingredient(value.id, value.name, value.amount);
+      this.sls.updateIngredient(value.id, newIngredient)
+    } else {
+      const newIngredient = new Ingredient(id, value.name, value.amount);
+      this.sls.addIngredient(newIngredient);
+    }
   }
 
   ngOnDestroy() {
