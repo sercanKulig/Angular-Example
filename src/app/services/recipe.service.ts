@@ -13,8 +13,8 @@ export class RecipeService {
       'This is simply a test',
       'https://upload.wikimedia.org/wikipedia/commons/1/15/Recipe_logo.jpeg',
       [
-        new Ingredient('Meat', 1),
-        new Ingredient('French Fries', 20)
+        new Ingredient(10, 'Meat', 1),
+        new Ingredient(11, 'French Fries', 20)
       ]),
     new Recipe(
       2,
@@ -22,8 +22,8 @@ export class RecipeService {
       'This is simply a test',
       'https://upload.wikimedia.org/wikipedia/commons/1/15/Recipe_logo.jpeg',
       [
-        new Ingredient('Buns', 2),
-        new Ingredient('Meat', 1)
+        new Ingredient(12, 'Buns', 2),
+        new Ingredient(13, 'Meat', 1)
       ])
   ];
 
