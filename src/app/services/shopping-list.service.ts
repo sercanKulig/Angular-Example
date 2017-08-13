@@ -33,4 +33,14 @@ export class ShoppingListService {
     this.ingredientsChange.next(this.ingredients.slice());
   }
 
+  deleteIngredient(id: number) {
+    this.ingredients.splice((id - 1), 1);
+    this.ingredientsChange.next(this.ingredients.slice());
+  }
+
+  getIngredientsLastId() {
+    const ingredientList = this.ingredients.slice();
+    return ingredientList.length > 0 ? ingredientList[ingredientList.length - 1].id : false;
+  }
+
 }
