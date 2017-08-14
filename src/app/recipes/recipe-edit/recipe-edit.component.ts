@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {Recipe} from "../../models/recipe.model";
-import {RecipeService} from "../../services/recipe.service";
-import {RouteProtectionService} from "../../shared/route-protection.service";
-import {FormArray, FormControl, FormGroup} from "@angular/forms";
+import {ActivatedRoute} from '@angular/router';
+import {Recipe} from '../../models/recipe.model';
+import {RecipeService} from '../../services/recipe.service';
+import {RouteProtectionService} from '../../shared/route-protection.service';
+import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -41,8 +41,8 @@ export class RecipeEditComponent implements OnInit {
     (<FormArray>this.recipeForm.get('ingredients')).push(
       new FormGroup({
         'id': new FormControl(),
-        'name': new FormControl(),
-        'amount': new FormControl()
+        'name': new FormControl(null, Validators.required),
+        'amount': new FormControl(null, [Validators.required , Validators.pattern(/^[1-9]+[0-9]*$/)])
       })
     )
   }
@@ -65,8 +65,8 @@ export class RecipeEditComponent implements OnInit {
           recipeIngredients.push(
             new FormGroup({
               'id': new FormControl(ingredients.id),
-              'name': new FormControl(ingredients.name),
-              'amount': new FormControl(ingredients.amount)
+              'name': new FormControl(ingredients.name, Validators.required),
+              'amount': new FormControl(ingredients.amount, [Validators.required , Validators.pattern(/^[1-9]+[0-9]*$/)])
             })
           );
         }
@@ -74,9 +74,9 @@ export class RecipeEditComponent implements OnInit {
     }
     this.recipeForm = new FormGroup({
       'recipeId': new FormControl(recipeId),
-      'name': new FormControl(recipeName),
-      'imagePath': new FormControl(recipeImagePath),
-      'description': new FormControl(recipeDescription),
+      'name': new FormControl(recipeName, Validators.required),
+      'imagePath': new FormControl(recipeImagePath, Validators.required),
+      'description': new FormControl(recipeDescription, Validators.required),
       'ingredients': recipeIngredients
     });
   }
