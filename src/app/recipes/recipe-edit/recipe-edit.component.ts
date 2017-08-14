@@ -28,45 +28,52 @@ export class RecipeEditComponent implements OnInit {
           this.id = recipes.id;
           this.recipe = this.recipeService.getRecipe(this.id);
           this.initForm();
-          this.routeGuard.onRootProtectionRecipe(this.recipe);
+          if (this.id != null && this.recipe == null) {
+            this.routeGuard.onRootProtectionRecipe(this.recipe);
+          }
         }
       );
   }
 
   onSubmit() {
-    console.log(this.recipeForm);
+    if (this.editMode) {
+      this.recipeService.updateRecipe(this.id, this.recipeForm.value);
+    } else {
+      this.recipeService.addRecipe(this.recipeForm.value);
+    }
   }
 
   onAddIngredients() {
     (<FormArray>this.recipeForm.get('ingredients')).push(
       new FormGroup({
-        'id': new FormControl(),
+        'id': new FormControl(this.recipeService.getRecipeLastId() + 1),
         'name': new FormControl(null, Validators.required),
-        'amount': new FormControl(null, [Validators.required , Validators.pattern(/^[1-9]+[0-9]*$/)])
+        'amount': new FormControl(null, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)])
       })
     )
   }
 
   private initForm() {
-    let recipeId = null;
+    let recipeId = this.recipeService.getRecipeLastId() + 1;
     let recipeName = '';
     let recipeDescription = '';
     let recipeImagePath = '';
     let recipeIngredients = new FormArray([]);
+    const recipe = this.recipeService.getRecipe(this.id);
+    recipe ? this.editMode = true : this.editMode = false;
 
-    if (!this.editMode) {
-      const recipe = this.recipeService.getRecipe(this.id);
-      recipeId = recipe.id;
-      recipeName = recipe.name;
-      recipeImagePath = recipe.imagePath;
-      recipeDescription = recipe.description;
-      if (recipe['ingredients']) {
+    if (this.editMode) {
+      recipeId = recipe ? recipe.id : this.recipeService.getRecipeLastId();
+      recipeName = recipe ? recipe.name : '';
+      recipeImagePath = recipe ? recipe.imagePath : '';
+      recipeDescription = recipe ? recipe.description : '';
+      if (recipe && recipe['ingredients']) {
         for (let ingredients of recipe.ingredients) {
           recipeIngredients.push(
             new FormGroup({
               'id': new FormControl(ingredients.id),
-              'name': new FormControl(ingredients.name, Validators.required),
-              'amount': new FormControl(ingredients.amount, [Validators.required , Validators.pattern(/^[1-9]+[0-9]*$/)])
+              'name': new FormControl(recipe ? ingredients.name : '', Validators.required),
+              'amount': new FormControl(recipe ? ingredients.amount : '', [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)])
             })
           );
         }

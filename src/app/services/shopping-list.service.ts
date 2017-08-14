@@ -40,7 +40,7 @@ export class ShoppingListService {
 
   getIngredientsLastId() {
     const ingredientList = this.ingredients.slice();
-    return ingredientList.length > 0 ? ingredientList[ingredientList.length - 1].id : false;
+    return ingredientList.length > 0 ? ingredientList[ingredientList.length - 1].id : 1;
   }
 
 }
