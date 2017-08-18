@@ -11,12 +11,13 @@ import {RecipeDetailComponent} from './recipes/recipe-detail/recipe-detail.compo
 import {RecipeItemComponent} from './recipes/recipe-list/recipe-item/recipe-item.component';
 import {ShoppingListComponent} from './shopping-list/shopping-list.component';
 import {ShoppingEditComponent} from './shopping-list/shopping-edit/shopping-edit.component';
-import {DropdownDirective} from "./directives/dropdown.directive";
-import {ShoppingListService} from "./services/shopping-list.service";
-import {AppRoutingModule} from "./app-routing.module";
+import {DropdownDirective} from './directives/dropdown.directive';
+import {ShoppingListService} from './services/shopping-list.service';
+import {AppRoutingModule} from './app-routing.module';
 import {RecipeStartComponent} from './recipes/recipe-start/recipe-start.component';
 import {RecipeEditComponent} from './recipes/recipe-edit/recipe-edit.component';
-import {RouteProtectionService} from "./shared/route-protection.service";
+import {RouteProtectionService} from './shared/route-protection.service';
+import {RecipeService} from './services/recipe.service';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import {RouteProtectionService} from "./shared/route-protection.service";
     HttpModule,
     AppRoutingModule
   ],
-  providers: [ShoppingListService, RouteProtectionService],
+  providers: [ShoppingListService, RecipeService, RouteProtectionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
