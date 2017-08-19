@@ -4,6 +4,7 @@ import {Http, Response} from '@angular/http';
 import {Ingredient} from "app/models/ingredient.model";
 import {ShoppingListService} from "./shopping-list.service";
 import {Subject} from "rxjs/Subject";
+import {AuthService} from "./auth.service";
 
 @Injectable()
 export class RecipeService {
@@ -30,7 +31,7 @@ export class RecipeService {
       ])*/
   ];
 
-  constructor(private http: Http, private sls: ShoppingListService) {
+  constructor(private http: Http, private sls: ShoppingListService, private authService: AuthService) {
   }
 
   /*
@@ -87,7 +88,8 @@ export class RecipeService {
   }
 
   getData() {
-    this.http.get('https://angular-http-b118b.firebaseio.com/recipes.json').map(
+    const token = this.authService.getToken();
+    this.http.get('https://angular-http-b118b.firebaseio.com/recipes.json?auth=' + token).map(
         (response: Response) => {
           const recipes: Recipe[] = response.json();
           for (let recipe of recipes) {
@@ -107,6 +109,9 @@ export class RecipeService {
   }
 
   putData() {
-    return this.http.put('https://angular-http-b118b.firebaseio.com/recipes.json', this.getRecipes());
+    const token = this.authService.getToken();
+    return this.http.put('https://angular-http-b118b.firebaseio.com/recipes.json?auth=' + token, this.getRecipes());
   }
+
+
 }

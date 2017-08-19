@@ -2,6 +2,8 @@ import {Ingredient} from "../models/ingredient.model";
 import {Subject} from "rxjs/Subject";
 import {Injectable} from "@angular/core";
 import {Http, Response} from "@angular/http";
+import {AuthService} from "./auth.service";
+import {RouteProtectionService} from "../shared/route-protection.service";
 
 @Injectable()
 export class ShoppingListService {
@@ -13,7 +15,7 @@ export class ShoppingListService {
     new Ingredient(2, 'Tomatoes', 10),*/
   ];
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private authService: AuthService, private routeProtectionService: RouteProtectionService) {
   }
 
   getIngredients() {
@@ -67,7 +69,8 @@ export class ShoppingListService {
   }
 
   getData() {
-    this.http.get('https://angular-http-b118b.firebaseio.com/ingredients.json')
+    const token = this.authService.getToken();
+    this.http.get('https://angular-http-b118b.firebaseio.com/ingredients.json?auth=' + token)
       .map(
         (response: Response) => {
           const ingredients: Ingredient[] = response.json();
@@ -84,7 +87,8 @@ export class ShoppingListService {
   }
 
   putData() {
-    return this.http.put('https://angular-http-b118b.firebaseio.com/ingredients.json', this.getIngredients());
+    const token = this.authService.getToken();
+    return this.http.put('https://angular-http-b118b.firebaseio.com/ingredients.json?auth=' + token, this.getIngredients());
   }
 
 }

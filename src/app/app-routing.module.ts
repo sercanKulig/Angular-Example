@@ -7,16 +7,18 @@ import {RecipeDetailComponent} from "./recipes/recipe-detail/recipe-detail.compo
 import {RecipeEditComponent} from "./recipes/recipe-edit/recipe-edit.component";
 import {SingupComponent} from "./auth/singup/singup.component";
 import {SinginComponent} from "./auth/singin/singin.component";
+import {RouteProtectionService} from "./shared/route-protection.service";
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/recipes', pathMatch: 'full'},
-  {path: 'recipes', component: RecipesComponent, children: [
+  {
+    path: 'recipes', component: RecipesComponent, canActivate: [RouteProtectionService], children: [
     {path: '', component: RecipeStartComponent },
     {path: 'new', component: RecipeEditComponent},
     {path: ':id', component: RecipeDetailComponent },
     {path: ':id/edit', component: RecipeEditComponent},
   ]},
-  {path: 'shopping-list', component: ShoppingListComponent},
+  {path: 'shopping-list', component: ShoppingListComponent, canActivate: [RouteProtectionService]},
   {path: 'signup', component: SingupComponent},
   {path: 'signin', component: SinginComponent},
 ];
