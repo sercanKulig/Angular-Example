@@ -87,8 +87,7 @@ export class RecipeService {
   }
 
   getData() {
-    this.http.get('https://angular-http-b118b.firebaseio.com/recipes.json')
-      .map(
+    this.http.get('https://angular-http-b118b.firebaseio.com/recipes.json').map(
         (response: Response) => {
           const recipes: Recipe[] = response.json();
           for (let recipe of recipes) {

@@ -19,6 +19,8 @@ import {RecipeEditComponent} from './recipes/recipe-edit/recipe-edit.component';
 import {RouteProtectionService} from './shared/route-protection.service';
 import {RecipeService} from './services/recipe.service';
 import {DataStorageService} from './shared/data-storage.service';
+import {SingupComponent} from './auth/singup/singup.component';
+import {SinginComponent} from './auth/singin/singin.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import {DataStorageService} from './shared/data-storage.service';
     ShoppingEditComponent,
     DropdownDirective,
     RecipeStartComponent,
-    RecipeEditComponent
+    RecipeEditComponent,
+    SingupComponent,
+    SinginComponent
   ],
   imports: [
     BrowserModule,
