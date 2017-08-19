@@ -21,6 +21,7 @@ import {RecipeService} from './services/recipe.service';
 import {DataStorageService} from './shared/data-storage.service';
 import {SingupComponent} from './auth/singup/singup.component';
 import {SinginComponent} from './auth/singin/singin.component';
+import {AuthService} from "./services/auth.service";
 
 @NgModule({
   declarations: [
@@ -45,7 +46,7 @@ import {SinginComponent} from './auth/singin/singin.component';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [ShoppingListService, RecipeService, RouteProtectionService, DataStorageService],
+  providers: [ShoppingListService, RecipeService, RouteProtectionService, DataStorageService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
